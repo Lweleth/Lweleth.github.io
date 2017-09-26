@@ -1142,7 +1142,6 @@ footer.entry-meta {
 }
 
 /* Hexo Code */
-/*
 figure.highlight {
     border: 1px solid rgba(0, 0, 0, 0.24);
     margin-bottom: 15px;
@@ -1190,7 +1189,7 @@ figure.highlight pre {
 figure.highlight .line {
     height: 20px;
     font-family: Consolas, Monaco, Lucida Console, monospace;
-}*/
+}
 
 
 
