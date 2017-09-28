@@ -65,6 +65,87 @@
       <div id="main" class="wrapper">
         <div id="primary" class="site-content"><div id="content" role="main">
   
+    <article id="post-bzoj-3309-莫比乌斯反演" class="post-bzoj-3309-莫比乌斯反演 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/2017/09/29/bzoj-3309-莫比乌斯反演/">bzoj 3309 莫比乌斯反演</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2017/09/29/bzoj-3309-莫比乌斯反演/" data-id="cj84o3qnr0000ssnxk1xk400q" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <p>
+ \(n=p_1^{a_1}p_2^{a_2}…p_k^{a_k}，p_i\) 为素数，定义 \(f(n)=max(a_1,a_2…,a_k)\) 。
+给定 \((a,b)=1e7\) 求 \( \sum\limits_{i=1}^{a}\sum\limits_{j=1}^{b}f((i,j))\) 先简化。
+
+$$\begin{eqnarray*} \sum\limits_{i=1}^{a}\sum\limits_{j=1}^{b}f((i,j)) 
+&=& \sum_{d=1}^{min(a,b)}\sum\limits_{i=1}^{a}\sum\limits_{j=1}^{b}
+f(d)[(i,j)=d] \newline &=&  \sum_{d=1}^{min(a,b)}\sum\limits_{i=1}^{\lfloor
+ \frac{a}{d} \rfloor}\sum\limits_{j=1}^{\lfloor \frac{a}{d} \rfloor}f(d)[(i,j)=1] \newline
+ &=& \sum\limits_{{\rm{d = 1}}}^{\min (a,b)} {\sum\limits_{i = 1}^{\left\lfloor
+ {\frac{a}{d}} \right\rfloor } {\sum\limits_{j = 1}^{\left\lfloor {\frac{b}{d}} \right\rfloor }
+ {\sum\limits_{k|(i,j)}^{} {\mu (k)f(d)} } } } \newline   &=& \sum\limits_{d = 1}
+ ^{\min (a,b)} {\sum\limits_{k = 1}^{\min (\left\lfloor {\frac{a}{d}} \right\rfloor ,\left\lfloor {\frac{b}{d}}
+ \right\rfloor )} {f(d)\mu (k)} \left\lfloor {\frac{a}{{kd}}} \right\rfloor \left\lfloor {\frac{b}{{kd}}} \right\rfloor } 
+  \newline &=& \sum\limits_{T = kd = 1}^{\min (a,b)} {\sum\limits_{d|T}^{} {f(d)\mu (\frac{T}{d})}
+ \left\lfloor {\frac{a}{T}} \right\rfloor \left\lfloor {\frac{b}{T}} \right\rfloor } \newline \end{eqnarray*}$$
+
+所以只要能够预处理出 \(\sum\limits_{d|T} {f(d)\mu (\frac{T}{d})}\) 就能分块了。
+
+注意观察该函数，根据 \(f()\) 取素因子次数的最大值及 \(\mu()\) 数论意义上的容斥性质，
+可以发现当 \(a_i\) 的值都一样时，才存在一个次数的组合使 \(\frac{T}{d}=p_1^{1}p_2^{1}…p_k^{1}\) 值无法被消去，
+因为它的 \(f()\) 值要比对称的组合 \(f(p_1^{0}p_2^{0}…p_k^{0})\) 大1，
+而其他的所有组合都可找到一个素因子数量对称的组合使得两者的 \(\mu\) 互为相反数而相消。
+
+故最后 \( \sum\limits_{d|T} {f(d)\mu (\frac{T}{d})}=(-1)^(k+1)\) 
+
+线性筛里处理数论函数。预处理其前缀和就好了。
+
+
+undefined
+
+</p>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2017/09/29/bzoj-3309-莫比乌斯反演/">
+    <time datetime="2017-09-28T16:17:14.000Z" class="entry-date">
+        2017-09-29
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/ACM/">ACM</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ACM-莫比乌斯反演-容斥-数论-BZOJ/">ACM 莫比乌斯反演 容斥 数论 BZOJ</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
     <article id="post-另一个存储点" class="post-另一个存储点 post type-post status-publish format-standard hentry">
     <!---->
 
@@ -80,7 +161,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2017/09/26/另一个存储点/" data-id="cj819b6h80001kgnxqyjk8yoc" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2017/09/26/另一个存储点/" data-id="cj84o3qoh0004ssnxzcjjipn2" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -142,7 +223,7 @@ $ A = \begin{pmatrix} a_{11} & \dots & a_{1n} \newline & \ddots & \vdots \newlin
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2017/09/24/hello-world/" data-id="cj819b6h10000kgnxfdd0rayx" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2017/09/24/hello-world/" data-id="cj84o3qo40001ssnxbcnbjbf4" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -198,12 +279,23 @@ $ A = \begin{pmatrix} a_{11} & \dots & a_{1n} \newline & \ddots & \vdots \newlin
     
   
     
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ACM/">ACM</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
   
     
   <aside class="widget">
     <h3 class="widget-title">Recents</h3>
     <div class="widget-content">
       <ul>
+        
+          <li>
+            <a href="/2017/09/29/bzoj-3309-莫比乌斯反演/">bzoj 3309 莫比乌斯反演</a>
+          </li>
         
           <li>
             <a href="/2017/09/26/另一个存储点/">另一个存储点</a>
@@ -222,7 +314,7 @@ $ A = \begin{pmatrix} a_{11} & \dots & a_{1n} \newline & \ddots & \vdots \newlin
   <aside class="widget">
     <h3 class="widget-title">Tags</h3>
     <div class="widget-content">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ACM-莫比乌斯反演-容斥-数论-BZOJ/">ACM 莫比乌斯反演 容斥 数论 BZOJ</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </aside>
 
@@ -231,7 +323,7 @@ $ A = \begin{pmatrix} a_{11} & \dots & a_{1n} \newline & \ddots & \vdots \newlin
   <aside class="widget">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget-content tagcloud">
-      <a href="/tags/其他/" style="font-size: 10px;">其他</a>
+      <a href="/tags/ACM-莫比乌斯反演-容斥-数论-BZOJ/" style="font-size: 10px;">ACM 莫比乌斯反演 容斥 数论 BZOJ</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a>
     </div>
   </aside>
 
