@@ -394,45 +394,59 @@
 
       
         
-          
-          [TOC]
-1.Python调用C/C++方法的大致分类
-事实上python想要调用C/C++有以下几种^1：
-
-| Approach | Vintage | Representative User | Notable Pros          | Notable Cons |
-|:---------|:------- |:------------------- |:--------------------- |:-------------|
-| C extension modules|1991|Standard library|Extensive documentation and tutorials. Total control.|Compilation, portability, reference management. High C knowledge.|
-|SWIG| 1996 |crfsuite |Generate bindings for many languages at once |Excessive overhead if Python is the only target.|
-|ctypes|2003|oscrypto|No compilation, wide availability |Accessing and mutating C structures cumbersome and error prone.|
-|Cython	|2007|	gevent, kivy|	Python-like. Highly mature. High performance.	|Compilation, new syntax and toolchain.|
-|cffi|	2013|	cryptography, pypy|	Ease of integration, PyPy compatibility|	New/High-velocity.|
-
-
-这五种方法各有优劣，本文记录的是第一种手写C扩展模块的方法，如表格所示的是优点存在完善的教程，控制完全，缺点是移植性不高，而且还有引用计数这一个坑，但是相对来讲手写C扩展模块和Cython的性能要优于ctypes和cffi。
-当然，在不要求性能的条件下使用ctypes和cffi是最为方便的，可以直接将C/C++库编译成dll或so即可调用，只不过还要注意参数传递的语法...
-
-2.使用C写扩展模块的大致流程
-
-
-为.c文件引入Python.h头文件
-
-
-
-正常地编写模块中的函数
-包装函数，处理参数的接收、返回
-注册函数
-编写模块信息（py3）
-初始化模块
-编译.c源文件成链接库
-
-python2和python3的流程中的细节略有不同，主要是新增了模块信息，以及初始化模块函数的变化。
-1. 为.c文件引入Python.h头文件
-这个文件位于你python文件夹下的库文件夹中，它已经包括一些常用的库函数1LINUX:
-/usr/include/python3.X
-1WIN:
-%PYTHONPATH%\python3.X\include
-123456789101112131415161718192021这个位置在最后编译的时候会用到，当然使用setuptools的话就不用考虑这个小问题了。---### 2. 正常地编写模块中的函数例如写一个简单的快速幂取模：```c#include &lt;Python.h&gt;#define LL long longLL fpow(LL a, int n, in
-          ...
+          <p>[TOC]</p>
+<h2>1.Python调用C/C++方法的大致分类</h2>
+<p>事实上python想要调用C/C++有以下几种<a href="http://www.paypal-engineering.com/2016/09/22/python-by-the-c-side" target="_blank" rel="external">^1</a>：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Approach</th>
+<th style="text-align:left">Vintage</th>
+<th style="text-align:left">Representative User</th>
+<th style="text-align:left">Notable Pros</th>
+<th style="text-align:left">Notable Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="https://docs.python.org/3/extending/extending.html" target="_blank" rel="external">C extension modules</a></td>
+<td style="text-align:left">1991</td>
+<td style="text-align:left">Standard library</td>
+<td style="text-align:left"><strong><a href="https://docs.python.org/3/c-api/" target="_blank" rel="external">Extensive documentation</a></strong> and tutorials. Total control.</td>
+<td style="text-align:left"><strong>Compilation, portability, reference management.</strong> High C knowledge.</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="http://www.swig.org/Doc1.3/Python.html" target="_blank" rel="external">SWIG</a></td>
+<td style="text-align:left">1996</td>
+<td style="text-align:left">crfsuite</td>
+<td style="text-align:left">Generate bindings for many languages at once</td>
+<td style="text-align:left">Excessive overhead if Python is the only target.</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://docs.python.org/3/library/ctypes.html" target="_blank" rel="external">ctypes</a></td>
+<td style="text-align:left">2003</td>
+<td style="text-align:left">oscrypto</td>
+<td style="text-align:left"><strong>No compilation, wide availability</strong></td>
+<td style="text-align:left">Accessing and <strong>mutating C structures</strong> cumbersome and <strong>error prone</strong>.</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="http://cython.org/" target="_blank" rel="external">Cython</a></td>
+<td style="text-align:left">2007</td>
+<td style="text-align:left">gevent, kivy</td>
+<td style="text-align:left">Python-like. Highly mature. High performance.</td>
+<td style="text-align:left"><strong>Compilation</strong>, new <strong>syntax</strong> and <strong>toolchain</strong>.</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://cffi.readthedocs.io/en/latest/overview.html" target="_blank" rel="external">cffi</a></td>
+<td style="text-align:left">2013</td>
+<td style="text-align:left">cryptography, <a href="http://pypy.org/" target="_blank" rel="external">pypy</a></td>
+<td style="text-align:left">Ease of integration, PyPy compatibility</td>
+<td style="text-align:left">New/High-velocity.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/11/17/为python编写C函数扩展模块/#more" rel="contents">
@@ -590,8 +604,7 @@ python2和python3的流程中的细节略有不同，主要是新增了模块信
 
       
         
-          
-          
+          <p>
  \(n=p_1^{a_1}p_2^{a_2}…p_k^{a_k}，p_i\) 为素数，定义 \(f(n)=max(a_1,a_2…,a_k)\) 。
 给定 \((a,b)=1e7\) 求 \( \sum\limits_{i=1}^{a}\sum\limits_{j=1}^{b}f((i,j))\) 先简化。
 
@@ -605,17 +618,7 @@ f(d)[(i,j)=d] \newline &=&  \sum_{d=1}^{min(a,b)}\sum\limits_{i=1}^{\lfloor
  ^{\min (a,b)} {\sum\limits_{k = 1}^{\min (\left\lfloor {\frac{a}{d}} \right\rfloor ,\left\lfloor {\frac{b}{d}}
  \right\rfloor )} {f(d)\mu (k)} \left\lfloor {\frac{a}{{kd}}} \right\rfloor \left\lfloor {\frac{b}{{kd}}} \right\rfloor } 
   \newline &=& \sum\limits_{T = kd = 1}^{\min (a,b)} {\sum\limits_{d|T}^{} {f(d)\mu (\frac{T}{d})}
- \left\lfloor {\frac{a}{T}} \right\rfloor \left\lfloor {\frac{b}{T}} \right\rfloor } \newline \end{eqnarray*}$$
-
-所以只要能够预处理出 \(\sum\limits_{d|T} {f(d)\mu (\frac{T}{d})}\) 就能分块了。
-
-注意观察该函数，根据 \(f()\) 取素因子次数的最大值及 \(\mu()\) 数论意义上的容斥性质，
-可以发现当 \(a_i\) 的值都一样时，才存在一个次数的组合使 \(\frac{T}{d}=p_1^{1}p_2^{1}…p_k^{1}\) 值无法被消去，
-因为它的 \(f()\) 值要比对称的组合 \(f(p_1^{0}p_2^{0}…p_k^{0})\) 大1，
-而其他的所有组合都可找到一个素因子数量对称的组合使得两者的 \(\mu\) 互为相反数而相消。
-
-故最后 \( \sum\limits_{d|T} {f
-          ...
+ \left\lfloor {\frac{a}{T}} \right\rfloor \left\lfloor {\frac{b}{T}} \right\rfloor } \newline \end{eqnarray*}$$</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/09/29/bzoj-3309-莫比乌斯反演/#more" rel="contents">
@@ -752,32 +755,25 @@ f(d)[(i,j)=d] \newline &=&  \sum_{d=1}^{min(a,b)}\sum\limits_{i=1}^{\lfloor
       
         
           
-          TEST
-test
-Sid0
-
+            <h1>TEST</h1>
+<h2>test</h2>
+<p><em>Sid0</em></p>
+<p>
 $\(a^{\sum\limits_{i|n}^{n}{(\varphi(i))}}\equiv x \mod n\)$
-
-$$ b \to ss $$
+</p>
+<p>$$ b \to ss $$
 
 \($ A = \begin{pmatrix} a_{11} & \dots & a_{1n} \\ & \ddots & \vdots \\ 0 && a_{mn} \\ \end{pmatrix}_{m \times n } $\) 
 
 $ A = \begin{pmatrix} a_{11} & \dots & a_{1n} \newline & \ddots & \vdots \newline 0 && a_{mn} \newline \end{pmatrix}_{m \times n } $ 
-
-$$\quad \texttip{\left[\sfrac{(n^2-1)}{(n-1)} \right]-1=n}{注意：适当添加括号，以免被误读}$$
-$$\begin{eqnarray*}\sum_{i=1}^{n}\sum_{j=1}^{m}[(i,j)=p]&amp;=&amp;\sum_{p=2}^{min(n,m)}\sum_{i=1}^{\lfloor\frac{n}{p}\rfloor}\sum_{j=1}^{\lfloor\frac{m}{p}\rfloor}[i⊥j]\newline&amp;=&amp;\sum_{p=2}^{min(n,m)}\sum_{i=1}^{\lfloor\frac{n}{p}\rfloor}\sum_{j=1}^{\lfloor\frac{m}{p}\rfloor}\sum_{d|(i,j)}{\mu(d)}\newline&amp;=&amp;\sum_{p=2}^{min(n,m)}\sum_{d}^{\lfloor\frac{min(n,m)}{p}\rfloor}{\mu(d)}\lfloor\frac{n}{pd}\rfloor\lfloor\frac{m}{pd}\rfloor\end{eqnarray*}$$
+</p>
+<p>$$\quad \texttip{\left[\sfrac{(n^2-1)}{(n-1)} \right]-1=n}{注意：适当添加括号，以免被误读}$$</p>
+<p>$$\begin{eqnarray*}\sum_{i=1}^{n}\sum_{j=1}^{m}[(i,j)=p]&amp;=&amp;\sum_{p=2}^{min(n,m)}\sum_{i=1}^{\lfloor\frac{n}{p}\rfloor}\sum_{j=1}^{\lfloor\frac{m}{p}\rfloor}[i⊥j]\newline&amp;=&amp;\sum_{p=2}^{min(n,m)}\sum_{i=1}^{\lfloor\frac{n}{p}\rfloor}\sum_{j=1}^{\lfloor\frac{m}{p}\rfloor}\sum_{d|(i,j)}{\mu(d)}\newline&amp;=&amp;\sum_{p=2}^{min(n,m)}\sum_{d}^{\lfloor\frac{min(n,m)}{p}\rfloor}{\mu(d)}\lfloor\frac{n}{pd}\rfloor\lfloor\frac{m}{pd}\rfloor\end{eqnarray*}$$
 这傻逼数学公式渲染搞的我好烦啊混账
-
-12345#include &lt;bits/stdc++.h&gt;using namespace std;int main()&#123;	cout &lt;&lt; "~" &lt;&lt; endl; &#125;
+<img src="/2017/09/26/另一个存储点/2.gif" alt="蛤"></p>
+<p><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"~"</span> &lt;&lt; <span class="built_in">endl</span>; </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
           
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/09/26/另一个存储点/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
         
       
     </div>
@@ -907,29 +903,22 @@ $$\begin{eqnarray*}\sum_{i=1}^{n}\sum_{j=1}^{m}[(i,j)=p]&amp;=&amp;\sum_{p=2}^{m
       
         
           
-          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick Start
-Create a new post
-1$ hexo new "My New Post"
-More info: Writing
-Run server
-1$ hexo server
-More info: Server
-Generate static files
-1$ hexo generate
-More info: Generating
-Deploy to remote sites
-1$ hexo deploy
-More info: Deployment
+            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2>Quick Start</h2>
+<h3>Create a new post</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure></p>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3>Run server</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure></p>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3>Generate static files</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure></p>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3>Deploy to remote sites</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure></p>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
 
           
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/09/24/hello-world/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
         
       
     </div>
@@ -1031,7 +1020,7 @@ More info: Deployment
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

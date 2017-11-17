@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="python 学习笔记," />
+  <meta name="keywords" content="python," />
 
 
 
@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="[TOC] 1.Python调用C/C++方法的大致分类 事实上python想要调用C/C++有以下几种^1：  | Approach | Vintage | Representative User | Notable Pros          | Notable Cons | |:---------|:------- |:------------------- |:--------------">
-<meta name="keywords" content="python 学习笔记">
+<meta name="description" content="[TOC] 1.Python调用C/C++方法的大致分类 事实上python想要调用C/C++有以下几种^1：    Approach Vintage Representative User Notable Pros Notable Cons     C extension modules 1991 Standard library Extensive documentation and tuto">
+<meta name="keywords" content="python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="为python编写C函数扩展模块">
 <meta property="og:url" content="http://yoursite.com/2017/11/17/为python编写C函数扩展模块/index.html">
 <meta property="og:site_name" content="夢と現実の区別がつかないんだよ。">
-<meta property="og:description" content="[TOC] 1.Python调用C/C++方法的大致分类 事实上python想要调用C/C++有以下几种^1：  | Approach | Vintage | Representative User | Notable Pros          | Notable Cons | |:---------|:------- |:------------------- |:--------------">
+<meta property="og:description" content="[TOC] 1.Python调用C/C++方法的大致分类 事实上python想要调用C/C++有以下几种^1：    Approach Vintage Representative User Notable Pros Notable Cons     C extension modules 1991 Standard library Extensive documentation and tuto">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-17T11:19:28.054Z">
+<meta property="og:updated_time" content="2017-11-17T11:59:20.117Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="为python编写C函数扩展模块">
-<meta name="twitter:description" content="[TOC] 1.Python调用C/C++方法的大致分类 事实上python想要调用C/C++有以下几种^1：  | Approach | Vintage | Representative User | Notable Pros          | Notable Cons | |:---------|:------- |:------------------- |:--------------">
+<meta name="twitter:description" content="[TOC] 1.Python调用C/C++方法的大致分类 事实上python想要调用C/C++有以下几种^1：    Approach Vintage Representative User Notable Pros Notable Cons     C extension modules 1991 Standard library Extensive documentation and tuto">
 
 
 
@@ -396,27 +396,63 @@
       
         <p>[TOC]</p>
 <h2>1.Python调用C/C++方法的大致分类</h2>
-<p>事实上python想要调用C/C++有以下几种<a href="%5B%E8%A1%A8%E6%A0%BC%E6%89%80%E5%9C%A8%E5%8E%9F%E6%96%87%E9%93%BE%E6%8E%A5%5D(http://www.paypal-engineering.com/2016/09/22/python-by-the-c-side/)">^1</a>：</p>
-<blockquote>
-<p>| Approach | Vintage | Representative User | Notable Pros          | Notable Cons |
-|:---------|:------- |:------------------- |:--------------------- |:-------------|
-| <a href="https://docs.python.org/3/extending/extending.html" target="_blank" rel="external">C extension modules</a>|1991|Standard library|<strong><a href="https://docs.python.org/3/c-api/" target="_blank" rel="external">Extensive documentation</a></strong> and tutorials. Total control.|<strong>Compilation, portability, reference management.</strong> High C knowledge.|
-|<a href="http://www.swig.org/Doc1.3/Python.html" target="_blank" rel="external">SWIG</a>| 1996 |crfsuite |Generate bindings for many languages at once |Excessive overhead if Python is the only target.|
-|<a href="https://docs.python.org/3/library/ctypes.html" target="_blank" rel="external">ctypes</a>|2003|oscrypto|<strong>No compilation, wide availability</strong> |Accessing and <strong>mutating C structures</strong> cumbersome and <strong>error prone</strong>.|
-|<a href="http://cython.org/" target="_blank" rel="external">Cython</a>	|2007|	gevent, kivy|	Python-like. Highly mature. High performance.	|<strong>Compilation</strong>, new <strong>syntax</strong> and <strong>toolchain</strong>.|
-|<a href="https://cffi.readthedocs.io/en/latest/overview.html" target="_blank" rel="external">cffi</a>|	2013|	cryptography, <a href="http://pypy.org/" target="_blank" rel="external">pypy</a>|	Ease of integration, PyPy compatibility|	New/High-velocity.|</p>
-</blockquote>
+<p>事实上python想要调用C/C++有以下几种<a href="http://www.paypal-engineering.com/2016/09/22/python-by-the-c-side" target="_blank" rel="external">^1</a>：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Approach</th>
+<th style="text-align:left">Vintage</th>
+<th style="text-align:left">Representative User</th>
+<th style="text-align:left">Notable Pros</th>
+<th style="text-align:left">Notable Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="https://docs.python.org/3/extending/extending.html" target="_blank" rel="external">C extension modules</a></td>
+<td style="text-align:left">1991</td>
+<td style="text-align:left">Standard library</td>
+<td style="text-align:left"><strong><a href="https://docs.python.org/3/c-api/" target="_blank" rel="external">Extensive documentation</a></strong> and tutorials. Total control.</td>
+<td style="text-align:left"><strong>Compilation, portability, reference management.</strong> High C knowledge.</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="http://www.swig.org/Doc1.3/Python.html" target="_blank" rel="external">SWIG</a></td>
+<td style="text-align:left">1996</td>
+<td style="text-align:left">crfsuite</td>
+<td style="text-align:left">Generate bindings for many languages at once</td>
+<td style="text-align:left">Excessive overhead if Python is the only target.</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://docs.python.org/3/library/ctypes.html" target="_blank" rel="external">ctypes</a></td>
+<td style="text-align:left">2003</td>
+<td style="text-align:left">oscrypto</td>
+<td style="text-align:left"><strong>No compilation, wide availability</strong></td>
+<td style="text-align:left">Accessing and <strong>mutating C structures</strong> cumbersome and <strong>error prone</strong>.</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="http://cython.org/" target="_blank" rel="external">Cython</a></td>
+<td style="text-align:left">2007</td>
+<td style="text-align:left">gevent, kivy</td>
+<td style="text-align:left">Python-like. Highly mature. High performance.</td>
+<td style="text-align:left"><strong>Compilation</strong>, new <strong>syntax</strong> and <strong>toolchain</strong>.</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://cffi.readthedocs.io/en/latest/overview.html" target="_blank" rel="external">cffi</a></td>
+<td style="text-align:left">2013</td>
+<td style="text-align:left">cryptography, <a href="http://pypy.org/" target="_blank" rel="external">pypy</a></td>
+<td style="text-align:left">Ease of integration, PyPy compatibility</td>
+<td style="text-align:left">New/High-velocity.</td>
+</tr>
+</tbody>
+</table>
 <hr>
+<p><a id="more"></a></p>
 <p>这五种方法各有优劣，本文记录的<strong>是第一种手写C扩展模块的方法</strong>，如表格所示的是优点存在完善的教程，控制完全，缺点是移植性不高，而且还有<strong>引用计数</strong>这一个坑，但是相对来讲手写C扩展模块和Cython的性能要优于ctypes和cffi。
 当然，在不要求性能的条件下使用ctypes和cffi是最为方便的，可以直接将C/C++库编译成dll或so即可调用，只不过还要注意参数传递的语法...</p>
 <hr>
 <h2>2.使用C写扩展模块的大致流程</h2>
-<blockquote>
 <ol>
 <li>为.c文件引入Python.h头文件</li>
-</ol>
-</blockquote>
-<ol start="2">
 <li>正常地编写模块中的函数</li>
 <li>包装函数，处理参数的接收、返回</li>
 <li>注册函数</li>
@@ -426,33 +462,60 @@
 </ol>
 <p>python2和python3的流程中的细节略有不同，主要是新增了模块信息，以及初始化模块函数的变化。</p>
 <h3>1. 为.c文件引入Python.h头文件</h3>
-<p>这个文件位于你python文件夹下的库文件夹中，它已经包括一些常用的库函数<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">LINUX:</div></pre></td></tr></table></figure></p>
-<p>/usr/include/python3.X
-<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">WIN:</span></div></pre></td></tr></table></figure></p>
-<p>%PYTHONPATH%\python3.X\include
-<figure class="highlight autoit"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">这个位置在最后编译的时候会用到，当然使用setuptools的话就不用考虑这个小问题了。</div><div class="line"></div><div class="line">---</div><div class="line"></div><div class="line"><span class="meta">### 2. 正常地编写模块中的函数</span></div><div class="line">例如写一个简单的快速幂取模：</div><div class="line">```c</div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Python.h&gt;</span></span></div><div class="line"><span class="meta">#define LL long long</span></div><div class="line">LL fpow(LL a, <span class="built_in">int</span> n, <span class="built_in">int</span> <span class="built_in">mod</span>)</div><div class="line">&#123;</div><div class="line">	LL res = <span class="number">1</span><span class="comment">;</span></div><div class="line">	<span class="keyword">while</span>(n)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">if</span>(n &amp; <span class="number">1</span>)</div><div class="line">			res = (a * res % <span class="built_in">mod</span> + <span class="built_in">mod</span>) % <span class="built_in">mod</span><span class="comment">;</span></div><div class="line">		a = (a * a % <span class="built_in">mod</span> + <span class="built_in">mod</span>) % <span class="built_in">mod</span><span class="comment">; </span></div><div class="line">		n &gt;&gt;= <span class="number">1</span><span class="comment">;</span></div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> res % <span class="built_in">mod</span><span class="comment">;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个文件位于你python文件夹下的库文件夹中，它已经包括一些常用的库函数<code>stdio.h</code> ，<code>&lt;string.h&gt;</code> ，<code>&lt;stdlib.h&gt;</code></p>
+<p>LINUX:</p>
+<p><code>/usr/include/python3.X</code></p>
+<p>WIN:</p>
+<p><code>%PYTHONPATH%\python3.X\include</code></p>
+<p>这个位置在最后编译的时候会用到，当然使用setuptools的话就不用考虑这个小问题了。</p>
+<hr>
+<h3>2. 正常地编写模块中的函数</h3>
+<p>例如写一个简单的快速幂取模：</p>
+<p><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Python.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> LL long long</span></div><div class="line"><span class="function">LL <span class="title">fpow</span><span class="params">(LL a, <span class="keyword">int</span> n, <span class="keyword">int</span> mod)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	LL res = <span class="number">1</span>;</div><div class="line">	<span class="keyword">while</span>(n)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">if</span>(n &amp; <span class="number">1</span>)</div><div class="line">			res = (a * res % mod + mod) % mod;</div><div class="line">		a = (a * a % mod + mod) % mod; </div><div class="line">		n &gt;&gt;= <span class="number">1</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> res % mod;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <hr>
 <h3>3. 包装函数，处理参数的接收、返回</h3>
 <p><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> PyObject* _fpow(PyObject *self, PyObject *args)</div><div class="line">&#123;</div><div class="line">	LL a;</div><div class="line">	<span class="keyword">int</span> n, mod;</div><div class="line">	<span class="keyword">if</span>(! PyArg_ParseTuple(args, <span class="string">"L|i|i"</span>, &amp;a, &amp;n, &amp;mod))</div><div class="line">		<span class="keyword">return</span> <span class="literal">NULL</span>;</div><div class="line">	<span class="keyword">else</span> </div><div class="line">	&#123;</div><div class="line">		LL res = fpow(a, n, mod);</div><div class="line">		<span class="comment">//return Py_BuildValue("L", fpow(a, n, mod));</span></div><div class="line">		<span class="keyword">return</span> PyLong_FromLongLong(res);</div><div class="line">	&#125;	</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>我们这里可以注意到包装函数的返回值是一个<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">**self**: 指向模块对象中的对应函数，这个参数应当保留；</div><div class="line">**args**: 原函数中传递的参数都在这个列表里了。</div><div class="line">因此，整个过程是考虑如何接受Python类型的参数，并将之转换成C类型参数并正常地运行C函数，最后将得到的结果转换成python可操作的对象。</div><div class="line">```PyArg_ParseTuple()``` 该函数用于格式化地接受参数，其缩写代表的含义以及格式化语法可以查[这个文档](https://docs.python.org/3.4/c-api/arg.html)。</div><div class="line">```Py_BuildValue()``` 作用是将一个C类型变量转换成PyObject*对象，这种方法更有通用性，也有将变量转换成特定类型对象的方法```PyXXXX_FromXXXX()``` 具体可以查[这个文档](https://docs.python.org/3/c-api/concrete.html)。</div><div class="line"></div><div class="line">---</div><div class="line"></div><div class="line">###4. 注册函数</div></pre></td></tr></table></figure></p>
-<p>static PyMethodDef EXTENDFUN[] = {
-	{&quot;fpow&quot;, _fpow, METH_VARARGS, &quot;&quot;},
-	{NULL, NULL, 0, NULL}
-};
-<figure class="highlight clean"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">这个函数表的结构体名字可以随便起，其有<span class="number">4</span>个参数：</div><div class="line">第一个是调用该函数时用的名字，</div><div class="line">第二个是其函数的包装函数，</div><div class="line">第三个是参数传递方式，一般用```METH_VARAGS```，</div><div class="line">第四个是函数的描述，最后固定要用**空结构体**做结尾。</div><div class="line">[该结构体的文档](https:<span class="comment">//docs.python.org/3/c-api/structures.html)</span></div><div class="line"></div><div class="line">---</div><div class="line">### <span class="number">5.</span> 编写模块信息</div><div class="line">```c</div><div class="line">static struct PyModuleDef CMOD = &#123;</div><div class="line">	PyModuleDef_HEAD_INIT,</div><div class="line">	<span class="string">"CMOD"</span>, <span class="comment">//模块名</span></div><div class="line">	NULL,  <span class="comment">// 模块描述 文档</span></div><div class="line">	<span class="number">-1</span>,		<span class="comment">/* size of per-interpreter state of the module, </span></div><div class="line"><span class="comment">			or -1 if the module keeps state in global variables. */</span> </div><div class="line">	EXTENDFUN</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>我们这里可以注意到包装函数的返回值是一个<code>PyObject*</code>类型，其中参数</p>
+<p><strong>self</strong>: 指向模块对象中的对应函数，这个参数应当保留；</p>
+<p><strong>args</strong>: 原函数中传递的参数都在这个列表里了。</p>
+<p>因此，整个过程是考虑如何接受Python类型的参数，并将之转换成C类型参数并正常地运行C函数，最后将得到的结果转换成python可操作的对象。</p>
+<p><code>PyArg_ParseTuple()</code> 该函数用于格式化地接受参数，其缩写代表的含义以及格式化语法可以查<a href="https://docs.python.org/3.4/c-api/arg.html" target="_blank" rel="external">这个文档</a>。</p>
+<p><code>Py_BuildValue()</code> 作用是将一个C类型变量转换成PyObject*对象，这种方法更有通用性，也有将变量转换成特定类型对象的方法<code>PyXXXX_FromXXXX()</code> 具体可以查<a href="https://docs.python.org/3/c-api/concrete.html" target="_blank" rel="external">这个文档</a>。</p>
+<hr>
+<h3>4. 注册函数</h3>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">static PyMethodDef EXTENDFUN[] = &#123;</div><div class="line">	&#123;&quot;fpow&quot;, _fpow, METH_VARARGS, &quot;&quot;&#125;,</div><div class="line">	&#123;NULL, NULL, 0, NULL&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>这个函数表的结构体名字可以随便起，其有4个参数：</p>
+<p>第一个是调用该函数时用的名字，</p>
+<p>第二个是其函数的包装函数，</p>
+<p>第三个是参数传递方式，一般用<code>METH_VARAGS</code>，</p>
+<p>第四个是函数的描述，最后固定要用<strong>空结构体</strong>做结尾。</p>
+<p><a href="https://docs.python.org/3/c-api/structures.html" target="_blank" rel="external">该结构体的文档</a></p>
+<hr>
+<h3>5. 编写模块信息</h3>
+<p><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">PyModuleDef</span> <span class="title">CMOD</span> = &#123;</span></div><div class="line">	PyModuleDef_HEAD_INIT,</div><div class="line">	<span class="string">"CMOD"</span>, <span class="comment">//模块名</span></div><div class="line">	<span class="literal">NULL</span>,  <span class="comment">// 模块描述 文档</span></div><div class="line">	<span class="number">-1</span>,		<span class="comment">/* size of per-interpreter state of the module, </span></div><div class="line"><span class="comment">			or -1 if the module keeps state in global variables. */</span> </div><div class="line">	EXTENDFUN</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
 <p>这个单个结构体在python3中才需要用到，注意最后一个参数要用到之前写的注册函数。</p>
 <hr>
-<p>###6. 初始化模块
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">if</span> PY_MAJOR_VERSION &gt;=3</span></div><div class="line"><span class="function">PyMODINIT_FUNC <span class="title">PyInit_CMOD</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	PyObject *m;</div><div class="line">	m = PyModule_Create(&amp;CMOD);</div><div class="line">	<span class="keyword">if</span>(m == <span class="literal">NULL</span>)</div><div class="line">		<span class="keyword">return</span> <span class="literal">NULL</span>;</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"init CMOD module\n"</span>);</div><div class="line">	<span class="keyword">return</span> m;</div><div class="line">&#125;</div><div class="line"><span class="meta">#<span class="meta-keyword">else</span> </span></div><div class="line">	</div><div class="line"><span class="function">PyMODINIT_FUNC <span class="title">initCMOD</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	Py_InitModule(<span class="string">"CMOD"</span>, EXTENDFUN);</div><div class="line">&#125;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div></pre></td></tr></table></figure></p>
-<p>注意初始化的函数名称不可随意起，py&gt;=3下函数名需要定为<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">其内部实现也不太一样，由于py3增加了注册模块的一部分，所以直接使用```PyModule_Create(&amp; module_info)```即可，而py2需要在使用```initXXXX(const char*, PyMethodDef)```传递模块名，注册函数等参数。</div><div class="line"></div><div class="line">---</div><div class="line">###7. 编译.c源文件成链接库</div><div class="line">WIN下需要用到VS的命令行工具，编译命令：</div><div class="line">```cl /LD CMOD.c /o CMOD.pyd -I C:\python34\include C:\Python34\libs\python34.lib</div></pre></td></tr></table></figure></p>
-<p>LINUX下用GCC：
-<figure class="highlight plain"><figcaption><span>-fPIC -shared CMOD.c -o CMOD.so -I</span><a href="/usr/include/python3.4/">-lpython3.4```</a></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">当然，使用**setuptools**只需要写个py脚本:</div><div class="line">```python</div><div class="line"># setup.py</div><div class="line">from setuptools import setup, Extension</div><div class="line"></div><div class="line">mod = Extension(&apos;CMOD&apos;, sources=[&quot;CMOD.c&quot;])</div><div class="line">setup(ext_modules=[mod])</div></pre></td></tr></table></figure></p>
-<p>最后命令行下:
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python setup.py build</div></pre></td></tr></table></figure></p>
-<p>然后.pyd文件就生成在build文件夹里了。
-测试:
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> python3</span></div><div class="line">...</div><div class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; import CMOD</span></div><div class="line">init CMOD module</div><div class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; CMOD.fpor(2,5,107)</span></div><div class="line">32</div></pre></td></tr></table></figure></p>
-<p>##3.本文没有的（将来要补充的）</p>
+<h3>6. 初始化模块</h3>
+<p><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">if</span> PY_MAJOR_VERSION &gt;=3</span></div><div class="line"><span class="function">PyMODINIT_FUNC <span class="title">PyInit_CMOD</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	PyObject *m;</div><div class="line">	m = PyModule_Create(&amp;CMOD);</div><div class="line">	<span class="keyword">if</span>(m == <span class="literal">NULL</span>)</div><div class="line">		<span class="keyword">return</span> <span class="literal">NULL</span>;</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"init CMOD module\n"</span>);</div><div class="line">	<span class="keyword">return</span> m;</div><div class="line">&#125;</div><div class="line"><span class="meta">#<span class="meta-keyword">else</span> </span></div><div class="line">	</div><div class="line"><span class="function">PyMODINIT_FUNC <span class="title">initCMOD</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	Py_InitModule(<span class="string">"CMOD"</span>, EXTENDFUN);</div><div class="line">&#125;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div></pre></td></tr></table></figure></p>
+<p>注意初始化的函数名称不可随意起，py&gt;=3下函数名需要定为 <code>PyInit_XXXX()</code> 而py2为 <code>initXXXX</code></p>
+<p>其内部实现也不太一样，由于py3增加了注册模块的一部分，所以直接使用 <code>PyModule_Create(&amp; module_info)</code> 即可，而py2需要在使用 <code>initXXXX(const char*, PyMethodDef)</code> 传递模块名，注册函数等参数。</p>
+<hr>
+<h3>7. 编译.c源文件成链接库</h3>
+<p>WIN下需要用到VS的命令行工具，编译命令：</p>
+<p><code>cl /LD CMOD.c /o CMOD.pyd -I C:\python34\include C:\Python34\libs\python34.lib</code></p>
+<p>LINUX下用GCC：</p>
+<p><code>gcc -fPIC -shared CMOD.c -o CMOD.so -I /usr/include/python3.4/ -lpython3.4</code></p>
+<p>当然，使用<strong>setuptools</strong>只需要写个py脚本:</p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># setup.py</span></div><div class="line"><span class="keyword">from</span> setuptools <span class="keyword">import</span> setup, Extension</div><div class="line"></div><div class="line">mod = Extension(<span class="string">'CMOD'</span>, sources=[<span class="string">"CMOD.c"</span>])</div><div class="line">setup(ext_modules=[mod])</div></pre></td></tr></table></figure></p>
+<p>最后命令行下:</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python setup.py build</div></pre></td></tr></table></figure></p>
+<p>然后.pyd文件就生成在build文件夹里了。</p>
+<p>测试:</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> python3</div><div class="line">...</div><div class="line"><span class="meta">&gt;</span>&gt;&gt; import CMOD</div><div class="line">init CMOD module</div><div class="line"><span class="meta">&gt;</span>&gt;&gt; CMOD.fpor(2,5,107)</div><div class="line">32</div></pre></td></tr></table></figure></p>
+<h2>3.完整代码</h2>
+<p><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Python.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> LL long long</span></div><div class="line"><span class="function">LL <span class="title">fpow</span><span class="params">(LL a, <span class="keyword">int</span> n, <span class="keyword">int</span> mod)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	LL res = <span class="number">1</span>;</div><div class="line">	<span class="keyword">while</span>(n)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">if</span>(n &amp; <span class="number">1</span>)</div><div class="line">			res = (a * res % mod + mod) % mod;</div><div class="line">		a = (a * a % mod + mod) % mod; </div><div class="line">		n &gt;&gt;= <span class="number">1</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> res % mod;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//包装函数，接收参数/返回PyObject对象</span></div><div class="line"><span class="keyword">static</span> PyObject* _fpow(PyObject *self, PyObject *args)</div><div class="line">&#123;</div><div class="line">	LL a;</div><div class="line">	<span class="keyword">int</span> n, mod;</div><div class="line">	<span class="comment">//参数对应小写参照：https://docs.python.org/3.4/c-api/arg.html </span></div><div class="line">	<span class="keyword">if</span>(! PyArg_ParseTuple(args, <span class="string">"L|i|i"</span>, &amp;a, &amp;n, &amp;mod))</div><div class="line">		<span class="keyword">return</span> <span class="literal">NULL</span>;</div><div class="line">	<span class="keyword">else</span> </div><div class="line">	&#123;</div><div class="line">		LL res = fpow(a, n, mod);</div><div class="line">		<span class="comment">//return Py_BuildValue("L", fpow(a, n, mod));</span></div><div class="line">		<span class="keyword">return</span> PyLong_FromLongLong(res);</div><div class="line">		<span class="comment">//两种都可以 </span></div><div class="line">	&#125;</div><div class="line">		</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="comment">//在PyMethodDef 结构体中注册函数 METH_VARARGS指一般参数 也可以自定特殊参数</span></div><div class="line"><span class="keyword">static</span> PyMethodDef EXTENDFUN[] = &#123;</div><div class="line">	&#123;<span class="string">"fpow"</span>, _fpow, METH_VARARGS, <span class="string">""</span>&#125;,</div><div class="line">	&#123;<span class="literal">NULL</span>, <span class="literal">NULL</span>, <span class="number">0</span>, <span class="literal">NULL</span>&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//PY3 的特殊新增PyModuleDef？</span></div><div class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">PyModuleDef</span> <span class="title">CMOD</span> = &#123;</span></div><div class="line">	PyModuleDef_HEAD_INIT,</div><div class="line">	<span class="string">"CMOD"</span>, <span class="comment">//模块名</span></div><div class="line">	<span class="literal">NULL</span>,  <span class="comment">// 模块描述 文档</span></div><div class="line">	<span class="number">-1</span>,		<span class="comment">/* size of per-interpreter state of the module, </span></div><div class="line"><span class="comment">			or -1 if the module keeps state in global variables. */</span> </div><div class="line">	EXTENDFUN</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">if</span> PY_MAJOR_VERSION &gt;=3</span></div><div class="line"><span class="comment">//初始化函数注册模块名</span></div><div class="line"><span class="function">PyMODINIT_FUNC <span class="title">PyInit_CMOD</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	PyObject *m;</div><div class="line">	m = PyModule_Create(&amp;CMOD);</div><div class="line">	<span class="keyword">if</span>(m == <span class="literal">NULL</span>)</div><div class="line">		<span class="keyword">return</span> <span class="literal">NULL</span>;</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"init CMOD module\n"</span>);</div><div class="line">	<span class="keyword">return</span> m;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">else</span> </span></div><div class="line">	</div><div class="line"><span class="function">PyMODINIT_FUNC <span class="title">initCMOD</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	Py_InitModule(<span class="string">"CMOD"</span>, EXTENDFUN);</div><div class="line">&#125;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div></pre></td></tr></table></figure></p>
+<hr>
+<h2>4.本文没有的（将来要补充的）</h2>
 <ul>
 <li>引用计数的问题 这个问题如果不处理好有可能会造成内存泄漏</li>
 <li>C扩展模块中定义类</li>
@@ -476,7 +539,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/python-学习笔记/" rel="tag"># python 学习笔记</a>
+            <a href="/tags/python/" rel="tag"># python</a>
           
         </div>
       
@@ -598,7 +661,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -668,7 +731,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">1.Python调用C/C++方法的大致分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">2.使用C写扩展模块的大致流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.1.</span> <span class="nav-text">1. 为.c文件引入Python.h头文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.2.</span> <span class="nav-text">3. 包装函数，处理参数的接收、返回</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">1.Python调用C/C++方法的大致分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">2.使用C写扩展模块的大致流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.1.</span> <span class="nav-text">1. 为.c文件引入Python.h头文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.2.</span> <span class="nav-text">2. 正常地编写模块中的函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.3.</span> <span class="nav-text">3. 包装函数，处理参数的接收、返回</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.4.</span> <span class="nav-text">4. 注册函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.5.</span> <span class="nav-text">5. 编写模块信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.6.</span> <span class="nav-text">6. 初始化模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.7.</span> <span class="nav-text">7. 编译.c源文件成链接库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">3.完整代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">4.本文没有的（将来要补充的）</span></a></li></ol></div>
             
 
           </div>

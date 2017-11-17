@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="夢と現実の区別がつかないんだよ。">
 <meta property="og:description" content="\(n=p_1^{a_1}p_2^{a_2}…p_k^{a_k}，p_i\) 为素数，定义 \(f(n)=max(a_1,a_2…,a_k)\) 。 给定 \((a,b)=1e7\) 求 \( \sum\limits_{i=1}^{a}\sum\limits_{j=1}^{b}f((i,j))\) 先简化。  $$\begin{eqnarray*} \sum\limits_{i=1}^{a}\">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-08T09:06:46.478Z">
+<meta property="og:updated_time" content="2017-11-17T12:00:57.626Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="bzoj 3309 莫比乌斯反演">
 <meta name="twitter:description" content="\(n=p_1^{a_1}p_2^{a_2}…p_k^{a_k}，p_i\) 为素数，定义 \(f(n)=max(a_1,a_2…,a_k)\) 。 给定 \((a,b)=1e7\) 求 \( \sum\limits_{i=1}^{a}\sum\limits_{j=1}^{b}f((i,j))\) 先简化。  $$\begin{eqnarray*} \sum\limits_{i=1}^{a}\">
@@ -410,6 +410,9 @@ f(d)[(i,j)=d] \newline &=&  \sum_{d=1}^{min(a,b)}\sum\limits_{i=1}^{\lfloor
   \newline &=& \sum\limits_{T = kd = 1}^{\min (a,b)} {\sum\limits_{d|T}^{} {f(d)\mu (\frac{T}{d})}
  \left\lfloor {\frac{a}{T}} \right\rfloor \left\lfloor {\frac{b}{T}} \right\rfloor } \newline \end{eqnarray*}$$
 
+ 
+<a id="more"></a>
+
 所以只要能够预处理出 \(\sum\limits_{d|T} {f(d)\mu (\frac{T}{d})}\) 就能分块了。
 
 注意观察该函数，根据 \(f()\) 取素因子次数的最大值及 \(\mu()\) 数论意义上的容斥性质，
@@ -564,7 +567,7 @@ f(d)[(i,j)=d] \newline &=&  \sum_{d=1}^{min(a,b)}\sum\limits_{i=1}^{\lfloor
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
