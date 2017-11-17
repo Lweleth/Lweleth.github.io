@@ -290,6 +290,202 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/17/为python编写C函数扩展模块/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lweleth">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="夢と現実の区別がつかないんだよ。">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/17/为python编写C函数扩展模块/" itemprop="url">为python编写C函数扩展模块</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-17T17:13:20+08:00">
+                2017-11-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/17/为python编写C函数扩展模块/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/11/17/为python编写C函数扩展模块/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          [TOC]
+1.Python调用C/C++方法的大致分类
+事实上python想要调用C/C++有以下几种^1：
+
+| Approach | Vintage | Representative User | Notable Pros          | Notable Cons |
+|:---------|:------- |:------------------- |:--------------------- |:-------------|
+| C extension modules|1991|Standard library|Extensive documentation and tutorials. Total control.|Compilation, portability, reference management. High C knowledge.|
+|SWIG| 1996 |crfsuite |Generate bindings for many languages at once |Excessive overhead if Python is the only target.|
+|ctypes|2003|oscrypto|No compilation, wide availability |Accessing and mutating C structures cumbersome and error prone.|
+|Cython	|2007|	gevent, kivy|	Python-like. Highly mature. High performance.	|Compilation, new syntax and toolchain.|
+|cffi|	2013|	cryptography, pypy|	Ease of integration, PyPy compatibility|	New/High-velocity.|
+
+
+这五种方法各有优劣，本文记录的是第一种手写C扩展模块的方法，如表格所示的是优点存在完善的教程，控制完全，缺点是移植性不高，而且还有引用计数这一个坑，但是相对来讲手写C扩展模块和Cython的性能要优于ctypes和cffi。
+当然，在不要求性能的条件下使用ctypes和cffi是最为方便的，可以直接将C/C++库编译成dll或so即可调用，只不过还要注意参数传递的语法...
+
+2.使用C写扩展模块的大致流程
+
+
+为.c文件引入Python.h头文件
+
+
+
+正常地编写模块中的函数
+包装函数，处理参数的接收、返回
+注册函数
+编写模块信息（py3）
+初始化模块
+编译.c源文件成链接库
+
+python2和python3的流程中的细节略有不同，主要是新增了模块信息，以及初始化模块函数的变化。
+1. 为.c文件引入Python.h头文件
+这个文件位于你python文件夹下的库文件夹中，它已经包括一些常用的库函数1LINUX:
+/usr/include/python3.X
+1WIN:
+%PYTHONPATH%\python3.X\include
+123456789101112131415161718192021这个位置在最后编译的时候会用到，当然使用setuptools的话就不用考虑这个小问题了。---### 2. 正常地编写模块中的函数例如写一个简单的快速幂取模：```c#include &lt;Python.h&gt;#define LL long longLL fpow(LL a, int n, in
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/17/为python编写C函数扩展模块/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/29/bzoj-3309-莫比乌斯反演/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -813,7 +1009,7 @@ More info: Deployment
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -824,7 +1020,7 @@ More info: Deployment
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -835,7 +1031,7 @@ More info: Deployment
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
